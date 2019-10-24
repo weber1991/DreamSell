@@ -1,0 +1,31 @@
+# 忽略文件通用版本
+
+# python
+
+workspace.xml
+*.pyc
+*.py[cod]
+*.so
+*.egg
+*.egg-info
+dist
+bulid
+
+
+# django 
+__pycache__/
+# migrations/
+
+
+# windows
+Thumbs.db
+Desktop.ini
+ehthumbs.db
+
+# uwsgi
+uwsgi.log
+uwsgi.pid
+uwsgi.sock
+
+# vs code 
+.vscode
