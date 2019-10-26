@@ -13,7 +13,7 @@ class User(db.Model):
     consumption = db.Column(db.DECIMAL(10,2), default = 0) # 消费额
     addtime = db.Column(db.Datetime, index = True. default=datetime.now)
 
-    orders = db.relationship('Orders', backref = 'user') # 订单外键关系关联
+    orders = db.relationship('Orders', backref = 'user') # 订单外键关系关联， 一个用户多个订单
 
     def __repr__(self):
         return '<User %r>'% self.username
@@ -58,7 +58,7 @@ class SuperCat(db.Model):
     addtime = db.Column(db.Datetime, index = True, default=datetime.now)
 
     # 关联关系
-    subcat = db.relationship("Subcat", backref="supercat") # 和小类进行关联
+    subcat = db.relationship("Subcat", backref="supercat") # 和小类进行关联, 和小类，一对多
     goods = db.relationship("Goods", backref="supercat") # 和商品进行关联
 
     def __repr__(self):
@@ -72,7 +72,7 @@ class Subcat(db.Model):
     addtime = db.Column(db.Datetime, index = True, default=datetime.now)
     
     # 关联关系
-    supercat_id = db.relationship(db.Integer, db.ForeignKey('supercat.id') ) # 和大类进行关联
+    supercat_id = db.relationship(db.Integer, db.ForeignKey('supercat.id') ) # 和大类进行关联，和大类一对一
     goods = db.relationship("Goods", backref="subcat") # 和商品进行关联
 
     def __repr__(self):
@@ -98,20 +98,55 @@ class Goods(db.Model):
     # 关系关系
     supercat_id = db.Column(db.Integer, db.ForeignKey('supercat.id'))
     subcat_id = db.Column(db.Integer, db.ForeignKey('subcat.id'))
-    catr = db.relationship("Cart", backref = 'goods') # 和购物车关联
-    orders_detail = db.relationship("OrderDetail", backref = "goods") # 和订单关联
+    catr = db.relationship("Cart", backref = 'goods') # 和购物车关联 
+    orders_detail = db.relationship("OrderDetail", backref = "goods") # 和订单关联，一个商品可以存在多个订单里面
 
     def __repr__(self):
         return "<Goods %r>" % self.name
 
 # 购物车类
 class Cart(db.Model):
+    '''
+        每个用户应该对应一个购物车
+    '''
     __tablename__ = 'cart'
 
     id = db.Column(db.Integer, primary_key = True)
-    addtime = db.Column()
-    number = db.Column() # 购买数量
+    addtime = db.Column(db.Datetime. index=True, default = datetime.now)
+    number = db.Column(db.Integer, default=0) # 购买数量
 
     # 关联关系
-    good_id = db.Column()
-    user_id = db.Column()
+    good_id = db.Column(db.Integer, db.ForeignKey('goods.id'))
+    user_id = db.Column(db.Integer)  # 这里不使用foreignkey，这样user里面不用添加多购物车变量？
+
+    def __repr__(self):
+        return "<Cart %r>" % self.id
+
+# 订单类
+class Orders(db.Model):
+    __tablename__ = 'orders'
+
+    id = db.Column(db.Integer, primary_key = True)
+    addtime = db.Column(db.Datetime. index=True, default = datetime.now)
+    recevie_name = db.Column(db.String(255)) # 收件人姓名
+    recevie_address = db.Column(db.String(255)) # 收件人地址
+    recevie_tel = db.Column(db.String(255)) # 收件人手机号码
+    remark = db.Column(db.String(255)) # 备注信息
+
+    # 关联关系
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id')) # 和用户一对一， 
+    orders_detail = db.Column(db.Integer, db.ForeignKey('orders'))  # 关联订单详情
+
+    def __repr__(self):
+        return "<Orders %r>" % self.id
+
+
+
+# 订单详情
+class OrderDetail(db.Model):
+    __tablename__ = 'orders_detail'
+
+    id = db.Column(db.Integer, primary_key = True)
+    goods_id = db.Column(db.Integer, db.ForeignKey('good.id')) # 所属商品
+    order_id = db.Column(db.Integer, db.ForeignKey('order.id')) # 所属订单
+    number = db.Column(db.Integer, default = 0)

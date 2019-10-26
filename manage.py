@@ -2,7 +2,7 @@
 import os
 from app import create_app, db
 from flask_script import Shell, Manager, Server
-
+from flask_migrate import Migrate, MigrateCommand
 
 
 env = os.environ.get("InWorld_ENV", "Dev") # 调用系统的环境变量的值，如果没有则使用dev
@@ -11,6 +11,9 @@ app = create_app("app.config.%sConfig" % env.capitalize())
 # 调用flask_script扩展
 manager = Manager(app)
 
+# 调用flask_migrate扩展
+migrate = Migrate(app, db)
+
 
 def make_shell_context():
     return dict(app=app, db=db)
@@ -18,6 +21,10 @@ def make_shell_context():
 # 添加shell命令，同时初始化shell的变量
 manager.add_command("shell", Shell(make_context=make_shell_context))
 manager.add_command("server", Server())
+
+# 再添加db命令，将flask_script和flask_migrate关联起来
+manager.add_command("db", MigrateCommand)
+
 
 @app.errorhandler(404)
 def page_not_found(error):

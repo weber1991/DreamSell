@@ -1,6 +1,7 @@
 import sys
 import os
 
+# 获取当前路径
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 # 判断系统类型，然后设置sqlite的兼容性
@@ -18,7 +19,7 @@ class Config:
 class ProdConfig(Config):
     '''生产模式'''
     # "mysql+pymysql://user:password@ip:port/db_name"
-    # SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:weber@localhost:3306/learn_flask"
+    # SQLALCHEMY_DATABASE_URI = "mysql+pymysql://(username):(password)@localhost:3306/(database_name)"
 
 
 class DevConfig(Config):
