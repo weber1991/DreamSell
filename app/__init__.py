@@ -20,6 +20,10 @@ def create_app(config_name):
     db.init_app(app)
     
     # 导入和注册蓝图
+    from app.home import home as home_blueprint
+    # 默认为根路径
+    app.register_blueprint(home_blueprint)
+    # app.register_blueprint(home_blueprint, url_prefix="/home")
 
 
     return app
