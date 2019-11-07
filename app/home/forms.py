@@ -1,8 +1,10 @@
-from flask_wtf import FlaskFrom
+from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, TextAreaField
-from wtforms.validators import DataRequired, Email, Regexp, Length, EqualTo
+from wtforms.validators import DataRequired, Email, Regexp, Length, EqualTo, ValidationError
+from app.models import User
 
-class RegisterForm(FlaskFrom):
+
+class RegisterForm(FlaskForm):
     '''
     用户注册表单
     '''
@@ -15,7 +17,7 @@ class RegisterForm(FlaskFrom):
         description="用户名",
         render_kw={
             "type":"text",
-            "placeholder":"请输入用户名!"
+            "placeholder":"请输入用户名!",
             "class":"validate-username",
             "size":38,
         } 
@@ -80,3 +82,16 @@ class RegisterForm(FlaskFrom):
         """
         检测注册邮箱是否已经存在
         """
+        email = field.data
+        user = User.query.filter_by(email = email).count()
+        if user == 1:
+            raise ValidationError("邮箱已经存在！")
+    
+    def validate_phone(self, field):
+        '''
+        判断手机号是否存在
+        '''
+        phone = field.data
+        user = User.query.filter_by(phone = phone).count()
+        if user == 1:
+            raise ValidationError("手机号已经存在！")

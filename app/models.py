@@ -11,7 +11,7 @@ class User(db.Model):
     email = db.Column(db.String(100), unique=True) # 邮箱
     phone = db.Column(db.String(11), unique=True) # 手机号码
     consumption = db.Column(db.DECIMAL(10,2), default = 0) # 消费额
-    addtime = db.Column(db.Datetime, index = True. default=datetime.now)
+    addtime = db.Column(db.DateTime, index = True, default=datetime.now)
 
     orders = db.relationship('Orders', backref = 'user') # 订单外键关系关联， 一个用户多个订单
 
@@ -55,7 +55,7 @@ class SuperCat(db.Model):
     __tablename__ = "supercat"
     id = db.Column(db.Integer, primary_key=True)
     cat_name = db.Column(db.String(100)) # 大分类名称
-    addtime = db.Column(db.Datetime, index = True, default=datetime.now)
+    addtime = db.Column(db.DateTime, index = True, default=datetime.now)
 
     # 关联关系
     subcat = db.relationship("Subcat", backref="supercat") # 和小类进行关联, 和小类，一对多
@@ -69,7 +69,7 @@ class Subcat(db.Model):
     __tablename__  = "subcat"
     id = db.Column(db.Integer, primary_key=True)
     cat_name = db.Column(db.String(100)) # 分类名称
-    addtime = db.Column(db.Datetime, index = True, default=datetime.now)
+    addtime = db.Column(db.DateTime, index = True, default=datetime.now)
     
     # 关联关系
     supercat_id = db.relationship(db.Integer, db.ForeignKey('supercat.id') ) # 和大类进行关联，和大类一对一
@@ -90,7 +90,7 @@ class Goods(db.Model):
     view_count = db.Column(db.Integer, default = 0) # 浏览次数
     is_sale = db.Column(db.Boolean(), default = 0) # 是否特价
     is_now = db.Column(db.Boolean(), default = 0) # 是否新品
-    addtime = db.Column(db.Datetime, default = datetime.now, index=True)
+    addtime = db.Column(db.DateTime, default = datetime.now, index=True)
 
     # 待优化
     # is_sell = db.Column(db.Boolean(), default = 0) # 是否在售
@@ -112,7 +112,7 @@ class Cart(db.Model):
     __tablename__ = 'cart'
 
     id = db.Column(db.Integer, primary_key = True)
-    addtime = db.Column(db.Datetime. index=True, default = datetime.now)
+    addtime = db.Column(db.DateTime, index=True, default = datetime.now)
     number = db.Column(db.Integer, default=0) # 购买数量
 
     # 关联关系
@@ -127,7 +127,7 @@ class Orders(db.Model):
     __tablename__ = 'orders'
 
     id = db.Column(db.Integer, primary_key = True)
-    addtime = db.Column(db.Datetime. index=True, default = datetime.now)
+    addtime = db.Column(db.DateTime, index=True, default = datetime.now)
     recevie_name = db.Column(db.String(255)) # 收件人姓名
     recevie_address = db.Column(db.String(255)) # 收件人地址
     recevie_tel = db.Column(db.String(255)) # 收件人手机号码
