@@ -1,8 +1,10 @@
 # _*_ codding:utf-8 _*_
 import os
+from app.models import *
 from app import create_app, db
 from flask_script import Shell, Manager, Server
 from flask_migrate import Migrate, MigrateCommand
+from flask import render_template
 
 
 env = os.environ.get("InWorld_ENV", "Dev") # 调用系统的环境变量的值，如果没有则使用dev
@@ -31,8 +33,8 @@ def page_not_found(error):
     """
     404
     """
-    # return render_template("home/404.html"), 404
-    return "404"
+    return render_template("home/404.html"), 404
+    #return "404"
 
 if __name__ == '__main__':
     '''

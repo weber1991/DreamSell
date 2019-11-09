@@ -147,6 +147,6 @@ class OrderDetail(db.Model):
     __tablename__ = 'orders_detail'
 
     id = db.Column(db.Integer, primary_key = True)
-    goods_id = db.Column(db.Integer, db.ForeignKey('good.id')) # 所属商品
-    order_id = db.Column(db.Integer, db.ForeignKey('order.id')) # 所属订单
+    goods_id = db.Column(db.Integer, db.ForeignKey('goods.id')) # 所属商品
+    order_id = db.Column(db.Integer, db.ForeignKey('orders.id')) # 所属订单
     number = db.Column(db.Integer, default = 0)
