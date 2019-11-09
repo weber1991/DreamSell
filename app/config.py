@@ -28,4 +28,5 @@ class DevConfig(Config):
     '''
     debug = True
     SQLALCHEMY_DATABASE_URI = prefix + os.path.join(basedir, 'DreamSell.db')
+    SQLALCHEMY_TRACK_MODIFICATIONS = True  # 设置sqlalchemy结构修改权限（源代码中没有，不写会报警告错误）
     SQLALCHEMY_ECHO = True # 输出显示sql语句

@@ -27,6 +27,10 @@ class User(db.Model):
         from werkzeug.security import check_password_hash
         return check_password_hash(self.password, password)
 
+
+
+
+
 # 管理员类：单独使用一个类来做后台管理员，而不是使用用户来添加权限
 class Admin(db.Model):
     __tablename__ = 'admin'
@@ -99,7 +103,7 @@ class Goods(db.Model):
     supercat_id = db.Column(db.Integer, db.ForeignKey('supercat.id'))
     subcat_id = db.Column(db.Integer, db.ForeignKey('subcat.id'))
     catr = db.relationship("Cart", backref = 'goods') # 和购物车关联 
-    orders_detail = db.relationship("OrderDetail", backref = "goods") # 和订单关联，一个商品可以存在多个订单里面
+    orders_detail = db.relationship("OrdersDetail", backref = "goods") # 和订单关联，一个商品可以存在多个订单里面
 
     def __repr__(self):
         return "<Goods %r>" % self.name
@@ -135,7 +139,7 @@ class Orders(db.Model):
 
     # 关联关系
     user_id = db.Column(db.Integer, db.ForeignKey('user.id')) # 和用户一对一， 
-    orders_detail = db.Column(db.Integer, db.ForeignKey('orders'))  # 关联订单详情
+    orders_detail = db.relationship("OrdersDetail", backref="orders")  # 关联订单详情
 
     def __repr__(self):
         return "<Orders %r>" % self.id
@@ -143,10 +147,13 @@ class Orders(db.Model):
 
 
 # 订单详情
-class OrderDetail(db.Model):
+class OrdersDetail(db.Model):
     __tablename__ = 'orders_detail'
 
     id = db.Column(db.Integer, primary_key = True)
     goods_id = db.Column(db.Integer, db.ForeignKey('goods.id')) # 所属商品
     order_id = db.Column(db.Integer, db.ForeignKey('orders.id')) # 所属订单
     number = db.Column(db.Integer, default = 0)
+    note = db.Column(db.String(255), default = "")  # 备注信息
+    note1 = db.Column(db.String(255), default = "")  # 备注信息
+    note2 = db.Column(db.String(255), default = "")  # 备注信息
