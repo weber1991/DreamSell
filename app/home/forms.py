@@ -23,7 +23,7 @@ class RegisterForm(FlaskForm):
         } 
     )
     phone = StringField(
-        label="联系电话",
+        label="联系电话：",
         validators=[
             DataRequired("手机号不能为空！"),
             Regexp("1[34578][0-9]{9}", message="手机号码格式不正确")
@@ -60,7 +60,7 @@ class RegisterForm(FlaskForm):
         }
     )
     repassword = PasswordField(
-        label="确认密码",
+        label="确认密码：",
         validators=[
             DataRequired("请输入正确密码"),
             EqualTo("password", message="两次密码不一致"),

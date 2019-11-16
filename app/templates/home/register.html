@@ -2,7 +2,7 @@
 <html >
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-<title>注册-51商城</title>
+<title>注册</title>
 <link rel="stylesheet" href="{{url_for('static',filename='home/css/mr-01.css')}}" type="text/css">
 </head>
 <body>
@@ -23,6 +23,7 @@
 						<!-- 会员注册表单 -->
 						<form  action="" method="post" class="form-horizontal">
 							<fieldset>
+								<!-- 用户名 -->
 								<div class="form-group">
 									<div class="col-sm-4 control-label">
 										{{form.username.label}}
@@ -35,6 +36,7 @@
 										{% endfor %}
 									</div>
 								</div>
+								<!-- 密码框 -->
 								<div class="form-group">
 									<div class="col-sm-4 control-label">
 										{{form.password.label}}
@@ -47,6 +49,7 @@
 										{% endfor %}
 									</div>
 								</div>
+								<!-- 重复密码框 -->
 								<div class="form-group">
 									<div class="col-sm-4 control-label">
 										{{form.repassword.label}}
@@ -59,6 +62,7 @@
 										{% endfor %}
 									</div>
 								</div>
+								<!-- 手机号码 -->
 								<div class="form-group">
 									<div class="col-sm-4 control-label">
 										{{form.phone.label}}
@@ -71,6 +75,7 @@
 										{% endfor %}
 									</div>
 								</div>
+								<!-- 邮件 -->
 								<div class="form-group">
 									<div class="col-sm-4 control-label">
 										{{form.email.label}}
@@ -85,7 +90,7 @@
 								</div>
 								<div class="form-group">
 									<div style="float: right; padding-right: 216px;">
-										51商城<a href="#" style="color: #0885B1;">《使用条款》</a>
+										**商城<a href="#" style="color: #0885B1;">《使用条款》</a>
 									</div>
 								</div>
 								<div class="form-group">
