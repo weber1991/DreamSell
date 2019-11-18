@@ -95,3 +95,19 @@ class RegisterForm(FlaskForm):
         user = User.query.filter_by(phone = phone).count()
         if user == 1:
             raise ValidationError("手机号已经存在！")
+
+
+class LoginFrom(FlaskForm):
+    '''
+    登录功能
+    '''
+    username = StringField(
+        validators=[
+
+        ]
+    )
+    password = PasswordField()
+
+    verify_code = StringField()
+
+    submit = SubmitField()
