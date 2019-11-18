@@ -111,3 +111,8 @@ class LoginFrom(FlaskForm):
     verify_code = StringField()
 
     submit = SubmitField()
+
+class PasswordForm(FlaskForm):
+    pass
+
+class Suge
